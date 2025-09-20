@@ -6,12 +6,22 @@ function App() {
 
   const [tasks, setTasks] = useState([])
   const [input, setInput] = useState('')
+  const [checked, setChecked] = useState(false)
+
+  const toggleCheck = (id) => {
+
+  //  setTasks(tasks.filter((_, idx)=> idx==id ? checked=!checked))
+  setTasks(tasks.map((task, idx)=> idx===id ? { ...task, checked: !task.checked} : task))
+   console.log(tasks[id].checked)
+  }
+
 
   const addTask = (e) => {
+
     e.preventDefault()
     // console.log(e)
     if(input.trim()) {
-      setTasks([...tasks, input.trim()])
+      setTasks([...tasks, {text: input.trim(), checked: false}])
       setInput('')
 
     } else {
@@ -20,11 +30,13 @@ function App() {
   }
 
   const deleteTask = (id) => {
+
     setTasks(tasks.filter((_, idx) => idx!==id))
   }
 
   const updateTask = (id, newValue) => {
-    setTasks(tasks.map((task, idx)=> idx===id ? newValue: task))
+
+    setTasks(tasks.map((task, idx)=> idx===id ? { ...task, text: newValue}:task))
   }
 
 
@@ -47,7 +59,7 @@ function App() {
     </div>
     <div>
   {tasks.map((item, id) => (
-      <TodoCard key={id} task={item} onUpdate={(newValue)=> updateTask(id, newValue)} onDelete={()=> deleteTask(id)}>
+      <TodoCard key={id} task={item} onCheck={()=>toggleCheck(id)} onUpdate={(newValue)=> updateTask(id, newValue)} onDelete={()=> deleteTask(id)}>
       </TodoCard>
     ))}
     </div>
