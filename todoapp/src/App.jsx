@@ -1,12 +1,22 @@
 import { useState } from 'react'
 import TodoCard from './components/TodoCard'
+import { useEffect } from 'react'
 
 
 function App() {
 
-  const [tasks, setTasks] = useState([])
+  const [tasks, setTasks] = useState(()=> {
+      const saved = localStorage.getItem('tasks')
+  return saved ? JSON.parse(saved) : []
+  })
   const [input, setInput] = useState('')
   const [checked, setChecked] = useState(false)
+  
+  useEffect(()=> {
+    localStorage.setItem('tasks', JSON.stringify(tasks))
+  }, [tasks])
+
+
 
   const toggleCheck = (id) => {
 
@@ -19,7 +29,6 @@ function App() {
   const addTask = (e) => {
 
     e.preventDefault()
-    // console.log(e)
     if(input.trim()) {
       setTasks([...tasks, {text: input.trim(), checked: false}])
       setInput('')
