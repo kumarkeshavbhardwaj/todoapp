@@ -30,21 +30,30 @@ function App() {
 
   return (
     <>
+    <div className='min-h-screen flex flex-col items-center'>
+
+    <div className='w-[500px]'>
+
+   
     <div className='text-white font-bold pt-10 text-center text-4xl'>
     <h1>
       Your To Do
     </h1>
-    <form onSubmit={addTask} action="">
-      <input value={input} onChange={(e) => setInput(e.target.value)} placeholder='Add new task...' className='placeholder:font-extralight placeholder:font text-white m-10 border-b-2 border-slate-500 focus:outline-0' type="text" />
+    <form className='mb-6 mt-6 flex items-center w-[500px] mx-auto' onSubmit={addTask} action="">
+      <input value={input} onChange={(e) => setInput(e.target.value)} placeholder='Add new task...' className='flex-1 placeholder:font-extralight placeholder:font text-white border-b-2 border-slate-500 focus:outline-0' type="text" />
       <button className=' cursor-pointer ml-5 bg-slate-800 text-white text-l py-0.5 px-2  rounded-md'>+</button>
 
     </form>
     </div>
-    {tasks.map((item, id) => (
+    <div>
+  {tasks.map((item, id) => (
       <TodoCard key={id} task={item} onUpdate={(newValue)=> updateTask(id, newValue)} onDelete={()=> deleteTask(id)}>
-        
       </TodoCard>
     ))}
+    </div>
+    </div>
+     </div>
+  
     </>
   )
 }
